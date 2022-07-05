@@ -3,31 +3,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
   form.addEventListener("submit", (e) => { 
     e.preventDefault(); 
-    const x = document.getElementById("priority").value;
-    const todo = e.target.new_task_description.value;
-    const chk = document.createElement("input"); 
-    const p = document.createElement("p"); 
-    const btn = document.createElement("button");  
-    chk.type = "checkbox"; 
-    btn.textContent = "delete";
-    p.textContent = `${todo}    `;
-    btn.addEventListener('click', handleDelete);
-    p.appendChild(chk); 
-    p.appendChild(btn); 
-    
-    if (x === "high") { 
-      document.querySelector("#high_tasks").appendChild(p);
-    }
-    if (x === "medium") { 
-      document.querySelector("#medium_tasks").appendChild(p);
-    } 
-    if (x === "low") { 
-      document.querySelector("#low_tasks").appendChild(p);
-    }
+    buildTodo(e.target["new-task-description"].value);
   }) 
 });
 
+function buildTodo(todo) {  
+const x = document.getElementById("priority").value;
+const chk = document.createElement("input"); 
+const p = document.createElement("p"); 
+const btn = document.createElement("button");  
+chk.type = "checkbox"; 
+btn.textContent = "delete";
+p.textContent = `${todo}    `;
+btn.addEventListener('click', handleDelete);
+p.appendChild(chk); 
+p.appendChild(btn); 
+handleSelection(x, p);
+
+}
 function handleDelete(e) { 
   e.target.parentNode.remove();
 } 
 
+function handleSelection(priority, p) { 
+  if (priority === "high") { 
+    document.querySelector("#high_tasks").appendChild(p);
+  }
+  if (priority === "medium") { 
+    document.querySelector("#medium_tasks").appendChild(p);
+  } 
+  if (priority === "low") { 
+    document.querySelector("#low_tasks").appendChild(p);
+  }
+}
